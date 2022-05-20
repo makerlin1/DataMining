@@ -8,18 +8,27 @@ import numpy as np
 import scipy.io as scio
 import matplotlib.pyplot as plt
 from DBSCAN import DBSCAN, get_k_distance
-dataFile = '../data/moon.mat'
-data = scio.loadmat(dataFile)
-X, Y = data["a"][:, :2], data["a"][:, -1]
 
-# 绘制K距离图，确定epsilon的范围
+
+dataFile = '../data/sizes5.mat'
+data = scio.loadmat(dataFile)
+print(data.keys())
+X, Y = data["sizes5"][:, :2], data["sizes5"][:, -1]
 k_distence = get_k_distance(X, k=5)
-search_range = input().split(',')
-search_range = np.linspace(float(search_range[0]), float(search_range[1]), num=5)
+eps, k = 1., 4
 dbscan = DBSCAN()
-for i, eps in enumerate(search_range):
-    dbscan.set_hyparams(eps, 3)
-    C = dbscan.fit(X, visual=True)
-    for cluster in C:
-        plt.scatter(cluster[:, 0], cluster[:, 1])
-    plt.show()
+dbscan.set_hyparams(eps, k)
+C = dbscan.fit(X, visual=False)
+for cluster in C:
+    plt.scatter(cluster[:, 0], cluster[:, 1])
+plt.title("eps: %f k: %d" % (eps, k))
+plt.show()
+
+
+
+# dataFile = '../data/smile.mat'
+# data = scio.loadmat(dataFile)
+# print(data.keys())
+# X = data["smile"][:, :2]
+
+
