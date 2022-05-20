@@ -21,9 +21,9 @@ class DBSCAN:
         epsilon_region = set()
         x = data[i]
         for j, d in enumerate(data):
-            if d == x:
-                continue
             dis = np.sum((d - x) ** 2) ** 0.5
+            if dis == 0.:
+                continue
             if dis <= self.eps:
                 epsilon_region.add(j)
         return epsilon_region
