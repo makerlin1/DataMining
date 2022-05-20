@@ -6,10 +6,21 @@ File:     DBSCAN.py
 """
 import numpy as np
 from loguru import logger
-import copy
 import random
+import matplotlib.pyplot as plt
 
 random.seed(2022)
+
+
+def get_k_distance(X, k=4):
+    dim = X.shape[-1]
+    RX = np.sum((X[None, ...] - X.reshape(-1, 1, dim)) ** 2, axis=-1) ** 0.5
+    dis = np.sort([np.sort(x)[k] for x in RX])[::-1]
+    plt.plot(dis)
+    plt.title("K(%d)-Distance" % k)
+    plt.grid()
+    plt.show()
+    return dis
 
 
 class DBSCAN:
@@ -29,7 +40,7 @@ class DBSCAN:
         return epsilon_region
 
     @logger.catch
-    def fit(self, X, epsilon=None, MinPts=None):
+    def fit(self, X, epsilon=None, MinPts=None, visual=False):
         if epsilon is not None:
             self.eps = epsilon
         if MinPts is not None:
@@ -44,11 +55,18 @@ class DBSCAN:
             if len(epsilon_region) >= self.MinPts:
                 Omega.add(i)
 
+        if visual:
+            plt.scatter(X[:, 0], X[:, 1], c="black")
+            if len(Omega) != 0:
+                core_points = np.array([X[i] for i in Omega])
+                plt.scatter(core_points[:, 0], core_points[:, 1], c="red")
+                plt.show()
+
         k = 0
-        Gamma = copy.deepcopy(D)
+        Gamma = D.copy()
         # line 10~24
         while len(Omega) != 0:
-            Gamma_old = copy.deepcopy(Gamma)
+            Gamma_old = Gamma.copy()
             o = random.choice(list(Omega))
             Q = [o]
             Gamma.remove(o)
