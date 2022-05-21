@@ -39,7 +39,7 @@ from DBSCAN import DBSCAN, get_k_distance
 # X, Y = data["smile"][:, :2], data["smile"][:, -1]
 # eps, k = 0.035, 3
 
-dataFile = '../data/spiral.mat'
+dataFile = 'data/spiral.mat'
 data = scio.loadmat(dataFile)
 print(data.keys())
 X, Y = data["spiral"][:, :2], data["spiral"][:, -1]

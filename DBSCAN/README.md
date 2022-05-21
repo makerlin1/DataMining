@@ -96,4 +96,16 @@ class DBSCAN:
 ### 数据测试
 通过绘制k距离图，可以大致确定epsilon的范围；
 #### Smile
-![img.png](img.png)![img_1.png](img_1.png)
+![](smile.png)
+#### long
+![](long.png)
+### suqare1
+![](square1.png)
+### square4
+![](square4.png)
+### sizes5
+![](size5.png)
+### 2d4c
+![](2d4c.png)
+### spiral
+![](spiral.png)
